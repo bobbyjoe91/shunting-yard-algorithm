@@ -4,4 +4,4 @@ Algorithm for converting infix notation (the commonly used one) to postfix notat
 
 Implemented in Node.js
 
-[This link](https://www.web4college.com/converters/infix-to-postfix-prefix.php]) is used as testing reference.
+[This link](https://www.web4college.com/converters/infix-to-postfix-prefix.php) is used as testing reference.
