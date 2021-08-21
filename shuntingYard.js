@@ -55,7 +55,7 @@ const convertToPostfix = (infix) => {
     '(': 4
   }
   const oprStack = []; // operator stack
-  const input = [...infix];
+  const input = [...infix.replace(/\s+/g, '')];
 
   let output = [];
   let stackLength = oprStack.length;
