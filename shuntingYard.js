@@ -1,4 +1,4 @@
-let mixedOperation = '(5-4-1)+9/5/2-7/1/7';
+let mixedOperation = '(564-4-1)+9.8/5/2-7/1.6647/7';
 
 const convertToPostfix = (infix) => {
   const PRECEDENCE = {
@@ -15,14 +15,21 @@ const convertToPostfix = (infix) => {
   let output = [];
   let stackLength = oprStack.length;
   let topOfStack = '';
+  let symbol;
 
-  for(let symbol of input) {
-    let convertedString = Number(symbol);
+  for(let i = 0; i < input.length; i++) {
+    symbol = input[i];
     stackLength = oprStack.length;
 
     // check if symbol is an operand (better use try ... catch ...)
-    if(!isNaN(convertedString)) {
-      output.push(symbol);
+    if(!isNaN(symbol)) {
+      if(!isNaN(input[i-1]) || input[i-1] === '.') {
+        output[output.length - 1] += symbol;
+      } else {
+        output.push(symbol);
+      }
+    } else if (symbol === '.') {
+      output[output.length - 1] += symbol;
     } else { // if symbol is an operator
       if(stackLength === 0) { // if stack is empty
         oprStack.push(symbol);
