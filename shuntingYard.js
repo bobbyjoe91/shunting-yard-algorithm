@@ -12,7 +12,7 @@ const convertToPostfix = (infix) => {
   const oprStack = []; // operator stack
   const input = [...infix];
 
-  let output = '';
+  let output = [];
   let stackLength = oprStack.length;
   let topOfStack = '';
 
@@ -22,19 +22,19 @@ const convertToPostfix = (infix) => {
 
     // check if symbol is an operand (better use try ... catch ...)
     if(!isNaN(convertedString)) {
-      output += symbol;
+      output.push(symbol);
     } else { // if symbol is an operator
       if(stackLength === 0) { // if stack is empty
         oprStack.push(symbol);
       } else if((PRECEDENCE[symbol] > PRECEDENCE[topOfStack]) || (topOfStack === '(')) {
         oprStack.push(symbol);
       } else if(PRECEDENCE[symbol] === PRECEDENCE[topOfStack]) {
-        output += oprStack.pop(symbol);
+        output.push(oprStack.pop());
         oprStack.push(symbol);
       } else if(PRECEDENCE[symbol] < PRECEDENCE[topOfStack]) {
         // pop all stack content
         while(stackLength > 0) {
-          output += oprStack.pop();
+          output.push(oprStack.pop());
           stackLength = oprStack.length;
         }
 
@@ -42,7 +42,7 @@ const convertToPostfix = (infix) => {
       } else if(symbol === ')') {
         // pop stack until '(' is found
         while(topOfStack !== '(') {
-          output += oprStack.pop();
+          output.push(oprStack.pop());
           stackLength = oprStack.length;
           topOfStack = oprStack[stackLength - 1];
         }
@@ -57,7 +57,7 @@ const convertToPostfix = (infix) => {
 
   // pop all stack content after input is empty
   while(oprStack.length > 0) {
-    output += oprStack.pop();
+    output.push(oprStack.pop());
   }
 
   return output;
