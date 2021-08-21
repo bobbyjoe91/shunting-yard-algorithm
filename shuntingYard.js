@@ -54,9 +54,9 @@ const convertToPostfix = (infix) => {
     '^': 3,
     '(': 4
   }
-  const oprStack = []; // operator stack
   const input = [...infix.replace(/\s+/g, '')];
 
+  let oprStack = []; // operator stack
   let output = [];
   let stackLength = oprStack.length;
   let topOfStack = '';
@@ -76,19 +76,17 @@ const convertToPostfix = (infix) => {
     } else if (symbol === '.') {
       output[output.length - 1] += symbol;
     } else { // if symbol is an operator
-      if (stackLength === 0) { // if stack is empty
-        oprStack.push(symbol);
-      } else if ((PRECEDENCE[symbol] > PRECEDENCE[topOfStack]) || (topOfStack === '(')) {
+      if ((stackLength === 0) || (PRECEDENCE[symbol] > PRECEDENCE[topOfStack]) || (topOfStack === '(')) {
         oprStack.push(symbol);
       } else if (PRECEDENCE[symbol] === PRECEDENCE[topOfStack]) {
         output.push(oprStack.pop());
         oprStack.push(symbol);
       } else if (PRECEDENCE[symbol] < PRECEDENCE[topOfStack]) {
+
         // pop all stack content
-        while (stackLength > 0) {
-          output.push(oprStack.pop());
-          stackLength = oprStack.length;
-        }
+        oprStack.reverse();
+        output = output.concat(oprStack);
+        oprStack = [];
 
         oprStack.push(symbol); // push symbol
       } else if (symbol === ')') {
@@ -108,9 +106,8 @@ const convertToPostfix = (infix) => {
   }
 
   // pop all stack content after input is empty
-  while (oprStack.length > 0) {
-    output.push(oprStack.pop());
-  }
+  oprStack.reverse();
+  output = output.concat(oprStack);
 
   return output;
 };
