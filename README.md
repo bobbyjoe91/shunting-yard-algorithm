@@ -10,4 +10,3 @@ Implemented in Node.js
 
 ### Future update
 - Enable unary operator, e.g: minus (-5, -1, etc)
-- Enable user to evaluate the expression
