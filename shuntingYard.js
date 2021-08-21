@@ -17,13 +17,13 @@ const convertToPostfix = (infix) => {
   let topOfStack = '';
   let symbol;
 
-  for(let i = 0; i < input.length; i++) {
+  for (let i = 0; i < input.length; i++) {
     symbol = input[i];
     stackLength = oprStack.length;
 
     // check if symbol is an operand (better use try ... catch ...)
-    if(!isNaN(symbol)) {
-      if(!isNaN(input[i-1]) || input[i-1] === '.') {
+    if (!isNaN(symbol)) {
+      if (!isNaN(input[i-1]) || input[i-1] === '.') {
         output[output.length - 1] += symbol;
       } else {
         output.push(symbol);
@@ -31,24 +31,24 @@ const convertToPostfix = (infix) => {
     } else if (symbol === '.') {
       output[output.length - 1] += symbol;
     } else { // if symbol is an operator
-      if(stackLength === 0) { // if stack is empty
+      if (stackLength === 0) { // if stack is empty
         oprStack.push(symbol);
-      } else if((PRECEDENCE[symbol] > PRECEDENCE[topOfStack]) || (topOfStack === '(')) {
+      } else if ((PRECEDENCE[symbol] > PRECEDENCE[topOfStack]) || (topOfStack === '(')) {
         oprStack.push(symbol);
-      } else if(PRECEDENCE[symbol] === PRECEDENCE[topOfStack]) {
+      } else if (PRECEDENCE[symbol] === PRECEDENCE[topOfStack]) {
         output.push(oprStack.pop());
         oprStack.push(symbol);
-      } else if(PRECEDENCE[symbol] < PRECEDENCE[topOfStack]) {
+      } else if (PRECEDENCE[symbol] < PRECEDENCE[topOfStack]) {
         // pop all stack content
-        while(stackLength > 0) {
+        while (stackLength > 0) {
           output.push(oprStack.pop());
           stackLength = oprStack.length;
         }
 
         oprStack.push(symbol); // push symbol
-      } else if(symbol === ')') {
+      } else if (symbol === ')') {
         // pop stack until '(' is found
-        while(topOfStack !== '(') {
+        while (topOfStack !== '(') {
           output.push(oprStack.pop());
           stackLength = oprStack.length;
           topOfStack = oprStack[stackLength - 1];
@@ -63,7 +63,7 @@ const convertToPostfix = (infix) => {
   }
 
   // pop all stack content after input is empty
-  while(oprStack.length > 0) {
+  while (oprStack.length > 0) {
     output.push(oprStack.pop());
   }
 
