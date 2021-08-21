@@ -115,8 +115,13 @@ const convertToPostfix = (infix) => {
   return output;
 };
 
-let mixedOperation = '(564-4-1)+9.8/5/2-7/1.6647/7'; // 559.3792912
-let reversePolishNotation = convertToPostfix(mixedOperation);
-let result = rpnEvaluator(reversePolishNotation);
+const evaluate = (expr) => {
+  let reversePolishNotation = convertToPostfix(expr);
+  let result = rpnEvaluator(reversePolishNotation);
 
-console.log(result);
+  return result;
+};
+
+module.exports = {
+  evaluate
+};
