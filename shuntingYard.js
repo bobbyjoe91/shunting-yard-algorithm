@@ -1,4 +1,49 @@
-let mixedOperation = '(564-4-1)+9.8/5/2-7/1.6647/7';
+const calculate = (numStr1, symbol, numStr2) => {
+  let operand1 = Number(numStr1), 
+    operand2 = Number(numStr2);
+
+  switch (symbol) {
+    case '+':
+      return operand1 + operand2;
+
+    case '-':
+      return operand1 - operand2;
+
+    case '*':
+      return operand1 * operand2;
+
+    case '/':
+      return operand1 / operand2;
+
+    case '^':
+      return operand1 ** operand2;
+
+    default:
+      throw 'Invalid operator';
+  }
+}
+
+const rpnEvaluator = (rpn) => {
+  const evaluationStack = [];
+  let numStr1, numStr2, tempResult, symbol;
+
+  for (let i = 0; i < rpn.length; i++) {
+    symbol = rpn[i];
+
+    if (!isNaN(symbol)) {
+      evaluationStack.push(symbol);
+    } else {
+      numStr2 = evaluationStack.pop(); // pop the top item in stack
+      numStr1 = evaluationStack.pop(); // pop the item after that
+
+      tempResult = calculate(numStr1, symbol, numStr2);
+
+      evaluationStack.push(tempResult);
+    }
+  }
+
+  return evaluationStack[0];
+};
 
 const convertToPostfix = (infix) => {
   const PRECEDENCE = {
@@ -70,5 +115,8 @@ const convertToPostfix = (infix) => {
   return output;
 };
 
-// 54-1-95/2/+71/7/-
-console.log(mixedOperation, '=>', convertToPostfix(mixedOperation));
+let mixedOperation = '(564-4-1)+9.8/5/2-7/1.6647/7'; // 559.3792912
+let reversePolishNotation = convertToPostfix(mixedOperation);
+let result = rpnEvaluator(reversePolishNotation);
+
+console.log(result);
