@@ -10,5 +10,4 @@ Implemented in Node.js
 
 ### Future update
 - Enable unary operator, e.g: minus (-5, -1, etc)
-- Enable user to input number larger than 9 and real number
 - Enable user to evaluate the expression
