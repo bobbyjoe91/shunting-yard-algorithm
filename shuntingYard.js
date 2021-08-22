@@ -74,7 +74,7 @@ const convertToPostfix = (infix) => {
     prevSymbol = (i > 0) ? input[i-1] : null;
     symbol = input[i];
     stackLength = oprStack.length;
-    // console.log(i, symbol)
+
     // check if symbol is an operand (better use try ... catch ...)
     if (!isNaN(symbol)) {
       if ((!isNaN(prevSymbol) || prevSymbol === '.') && prevSymbol) {
@@ -88,7 +88,11 @@ const convertToPostfix = (infix) => {
       oprStack.push('min')
     } 
     else { // if symbol is an operator
-      if ((stackLength === 0) || (PRECEDENCE[symbol] > PRECEDENCE[topOfStack]) || (topOfStack === '(')) {
+      if (
+        (stackLength === 0) || 
+        (PRECEDENCE[symbol] > PRECEDENCE[topOfStack]) || 
+        ((topOfStack === '(') && (symbol !== ')'))
+      ) {
         oprStack.push(symbol);
       } else if (PRECEDENCE[symbol] === PRECEDENCE[topOfStack]) {
         output.push(oprStack.pop());
@@ -96,7 +100,11 @@ const convertToPostfix = (infix) => {
       } else if (PRECEDENCE[symbol] < PRECEDENCE[topOfStack]) {
 
         // pop all stack content
-        while ((topOfStack !== '(') && (oprStack.length > 0)) {
+        while (
+          (topOfStack !== '(') && 
+          (oprStack.length > 0) && 
+          (PRECEDENCE[topOfStack] >= PRECEDENCE[symbol])
+        ) {
           output.push(oprStack.pop());
           topOfStack = oprStack[oprStack.length - 1];
         }
@@ -127,6 +135,7 @@ const convertToPostfix = (infix) => {
 
 const evaluate = (expr) => {
   let reversePolishNotation = convertToPostfix(expr);
+  // console.log(reversePolishNotation)
   let result = rpnEvaluator(reversePolishNotation);
 
   return result;
