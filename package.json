@@ -1,0 +1,29 @@
+{
+  "name": "pemdas-evaluator",
+  "version": "1.0.0",
+  "description": "Algorithm for converting infix notation (the commonly used one) to postfix notation. This algorithm can be developed further for evaluating mixed numerical expression in PEMDAS (or BODMAS) order.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bobbyjoe91/shunting-yard-algorithm.git"
+  },
+  "keywords": [
+    "shunting",
+    "yard",
+    "pemdas",
+    "bodmas"
+  ],
+  "author": "Bobby J.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bobbyjoe91/shunting-yard-algorithm/issues"
+  },
+  "homepage": "https://github.com/bobbyjoe91/shunting-yard-algorithm#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
